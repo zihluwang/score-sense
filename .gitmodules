@@ -1,3 +1,6 @@
 [submodule "score-sense-server"]
 	path = score-sense-server
 	url = git@github.com:OnixByte-Business/score-sense-server.git
+[submodule "score-sense-miniapp"]
+	path = score-sense-miniapp
+	url = git@github.com:OnixByte-Business/score-sense-miniapp.git
