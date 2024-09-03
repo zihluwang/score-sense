@@ -1,0 +1,3 @@
+[submodule "score-sense-server"]
+	path = score-sense-server
+	url = git@github.com:OnixByte-Business/score-sense-server.git
