@@ -138,10 +138,14 @@ COMMENT ON COLUMN "sequence"."next_sequence" IS '下一序号';
 COMMENT ON TABLE "sequence" IS '序号';
 
 CREATE TABLE "swipe" (
-  "sequence" int4 NOT NULL,
+  "id" int4 NOT NULL,
+  "name" varchar(255) NOT NULL,
+  "sequence" int4,
   "image_url" varchar(255) NOT NULL,
-  PRIMARY KEY ("sequence")
+  PRIMARY KEY ("id")
 );
+COMMENT ON COLUMN "swipe"."id" IS '轮播图 ID';
+COMMENT ON COLUMN "swipe"."name" IS '图片名称';
 COMMENT ON COLUMN "swipe"."sequence" IS '轮播图顺序';
 COMMENT ON COLUMN "swipe"."image_url" IS '图片 URL';
 COMMENT ON TABLE "swipe" IS '轮播图';
