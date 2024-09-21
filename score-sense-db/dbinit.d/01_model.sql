@@ -31,6 +31,7 @@ COMMENT ON COLUMN "answer"."score" IS '用户在该题获得的分数，将实�
 CREATE TABLE "exam" (
   "id" int8 NOT NULL,
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "type" int4 NOT NULL,
   "description" text COLLATE "pg_catalog"."default",
   "province" char(2) NOT NULL,
   "prefecture" char(4) NOT NULL,
@@ -39,6 +40,7 @@ CREATE TABLE "exam" (
 ALTER TABLE "exam" OWNER TO "postgres";
 COMMENT ON COLUMN "exam"."id" IS '考试 ID';
 COMMENT ON COLUMN "exam"."name" IS '考试名称';
+COMMENT ON COLUMN "exam"."type" IS '考试类型';
 COMMENT ON COLUMN "exam"."description" IS '考试描述';
 COMMENT ON COLUMN "exam"."province" IS '举办省份';
 COMMENT ON COLUMN "exam"."prefecture" IS '举办城市';
@@ -60,6 +62,14 @@ COMMENT ON COLUMN "exam_result"."user_id" IS '参考用户 ID';
 COMMENT ON COLUMN "exam_result"."vacancy_id" IS '岗位 ID';
 COMMENT ON COLUMN "exam_result"."total_score" IS '总成绩';
 COMMENT ON COLUMN "exam_result"."completed_at" IS '完成考试时间';
+
+CREATE TABLE "exam_type" (
+  "id" int4 NOT NULL,
+  "name" varchar(255) NOT NULL,
+  PRIMARY KEY ("id")
+);
+COMMENT ON COLUMN "exam_type"."id" IS '考试类型 ID';
+COMMENT ON COLUMN "exam_type"."name" IS '考试类型名称';
 
 CREATE TABLE "exam_vacancy" (
   "exam_id" int8 NOT NULL,
