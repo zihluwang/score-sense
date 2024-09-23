@@ -28,6 +28,18 @@ COMMENT ON COLUMN "answer"."answer_text" IS '答案';
 COMMENT ON COLUMN "answer"."submitted_at" IS '提交时间';
 COMMENT ON COLUMN "answer"."score" IS '用户在该题获得的分数，将实际成绩 * 100 存储，如 100 分存储为 10,000。';
 
+CREATE TABLE "attachment" (
+  "id" int8 NOT NULL,
+  "name" varchar(255) NOT NULL,
+  "path" varchar(255) NOT NULL,
+  "content_type" varchar(255) NOT NULL,
+  PRIMARY KEY ("id")
+);
+COMMENT ON COLUMN "attachment"."id" IS '附件 ID';
+COMMENT ON COLUMN "attachment"."name" IS '附件名称';
+COMMENT ON COLUMN "attachment"."path" IS '文件在服务器本地的存储路径';
+COMMENT ON COLUMN "attachment"."content_type" IS '文件类型';
+
 CREATE TABLE "exam" (
   "id" int8 NOT NULL,
   "name" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
@@ -117,6 +129,7 @@ CREATE TABLE "question" (
   "id" int8 NOT NULL,
   "type" int4 NOT NULL,
   "question_text" text COLLATE "pg_catalog"."default" NOT NULL,
+  "image_id" int8,
   "max_score" int4 NOT NULL,
   CONSTRAINT "question_pkey" PRIMARY KEY ("exam_id", "id")
 );
@@ -125,29 +138,21 @@ COMMENT ON COLUMN "question"."exam_id" IS '考试 ID';
 COMMENT ON COLUMN "question"."id" IS '题目 ID';
 COMMENT ON COLUMN "question"."type" IS '试题类型';
 COMMENT ON COLUMN "question"."question_text" IS '题干';
+COMMENT ON COLUMN "question"."image_id" IS '图片 ID';
 COMMENT ON COLUMN "question"."max_score" IS '题目满分，将实际成绩 * 100 存储，如 100 存储为 10,000';
 COMMENT ON TABLE "question" IS '试题';
-
-CREATE TABLE "sequence" (
-  "key" varchar(255) NOT NULL,
-  "next_sequence" int4 NOT NULL,
-  PRIMARY KEY ("key")
-);
-COMMENT ON COLUMN "sequence"."key" IS '序号 key';
-COMMENT ON COLUMN "sequence"."next_sequence" IS '下一序号';
-COMMENT ON TABLE "sequence" IS '序号';
 
 CREATE TABLE "swipe" (
   "id" int4 NOT NULL,
   "name" varchar(255) NOT NULL,
-  "sequence" int4,
-  "image_url" varchar(255) NOT NULL,
+  "status" int4 NOT NULL,
+  "image_id" int8 NOT NULL,
   PRIMARY KEY ("id")
 );
 COMMENT ON COLUMN "swipe"."id" IS '轮播图 ID';
 COMMENT ON COLUMN "swipe"."name" IS '图片名称';
-COMMENT ON COLUMN "swipe"."sequence" IS '轮播图顺序';
-COMMENT ON COLUMN "swipe"."image_url" IS '图片 URL';
+COMMENT ON COLUMN "swipe"."status" IS '轮播图状态';
+COMMENT ON COLUMN "swipe"."image_id" IS '图片 URL';
 COMMENT ON TABLE "swipe" IS '轮播图';
 
 CREATE TABLE "user" (
@@ -155,7 +160,7 @@ CREATE TABLE "user" (
   "open_id" char(28) COLLATE "pg_catalog"."default" NOT NULL,
   "username" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "phone_number" char(11) COLLATE "pg_catalog"."default" NOT NULL,
-  "avatar_url" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "avatar_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "is_blocked" bool NOT NULL DEFAULT false,
   CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -167,7 +172,7 @@ COMMENT ON COLUMN "user"."id" IS '用户 ID';
 COMMENT ON COLUMN "user"."open_id" IS '用户微信 ID';
 COMMENT ON COLUMN "user"."username" IS '用户名';
 COMMENT ON COLUMN "user"."phone_number" IS '用户联系电话';
-COMMENT ON COLUMN "user"."avatar_url" IS '用户头像地址';
+COMMENT ON COLUMN "user"."avatar_id" IS '用户头像附件 ID';
 COMMENT ON COLUMN "user"."is_blocked" IS '用户是否被封禁';
 
 CREATE TABLE "vacancy" (
