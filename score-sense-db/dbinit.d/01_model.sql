@@ -76,7 +76,7 @@ COMMENT ON COLUMN "exam_result"."total_score" IS '总成绩';
 COMMENT ON COLUMN "exam_result"."completed_at" IS '完成考试时间';
 
 CREATE TABLE "exam_type" (
-  "id" int4 NOT NULL,
+  "id" serial,
   "name" varchar(255) NOT NULL,
   PRIMARY KEY ("id")
 );
@@ -141,6 +141,14 @@ COMMENT ON COLUMN "question"."question_text" IS '题干';
 COMMENT ON COLUMN "question"."image_id" IS '图片 ID';
 COMMENT ON COLUMN "question"."max_score" IS '题目满分，将实际成绩 * 100 存储，如 100 存储为 10,000';
 COMMENT ON TABLE "question" IS '试题';
+
+CREATE TABLE "sequence" (
+  "key" varchar(255) NOT NULL,
+  "next" int8 NOT NULL,
+  PRIMARY KEY ("key")
+);
+COMMENT ON COLUMN "sequence"."key" IS '序号 Key';
+COMMENT ON COLUMN "sequence"."next" IS '下一可用序号';
 
 CREATE TABLE "swipe" (
   "id" int4 NOT NULL,
