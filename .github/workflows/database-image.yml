@@ -15,6 +15,9 @@ jobs:
       - name: Checkout directory
         run: cd score-sense-db
 
+      - name: Check Directory
+        run: pwd & ls -l
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
