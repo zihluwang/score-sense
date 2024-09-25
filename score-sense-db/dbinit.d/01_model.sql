@@ -151,7 +151,7 @@ COMMENT ON COLUMN "sequence"."key" IS '序号 Key';
 COMMENT ON COLUMN "sequence"."next" IS '下一可用序号';
 
 CREATE TABLE "swipe" (
-  "id" int4 NOT NULL,
+  "id" int8 NOT NULL,
   "name" varchar(255) NOT NULL,
   "status" int4 NOT NULL,
   "image_id" int8 NOT NULL,
