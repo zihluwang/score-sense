@@ -10,18 +10,24 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-123456}
     networks:
       - app_network
+
+  cache:
+    image: ghcr.io/onixbyte-business/score-sense/score-sense-cache:${APP_VERSION:-latest}
+    ports: "${CACHE_PORT:-56379}:6379"
+    networks:
+      - app_network
   
   server:
     depends_on:
       - database
+      - cache
     image: ghcr.io/onixbyte-business/score-sense/score-sense-server:${APP_VERSION:-latest}
     ports:
       - "${SERVER_PORT:-8080}:8080"
     environment:
-      ACTIVE_PROFILES: ${ACTIVE_PROFILES:-prod,wechat,db}
+      ACTIVE_PROFILES: ${ACTIVE_PROFILES:-prod,wechat,db,cache,cors}
     volumes:
       - ${SERVER_CONFIG_PATH:-./config}:/app/config
     networks:
       - app_network
-
     
