@@ -32,4 +32,5 @@ jobs:
           password: ${{ secrets.GH_TOKEN }}
 
       - name: Build Docker Image
+        working-directory: score-sense-db
         run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/onixbyte-business/score-sense/score-sense-db:${{ github.event.release.tag_name }} --push .
