@@ -1,0 +1,56 @@
+name: Score Sense Database Builder
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build-db:
+    name: Build Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Build Docker Image
+        working-directory: score-sense-db
+        run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/onixbyte-business/score-sense/score-sense-db:${{ github.event.release.tag_name }} --push .
+
+  build-cache:
+    name: Build Cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Build Docker Image
+        working-directory: score-sense-cache
+        run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/onixbyte-business/score-sense/score-sense-cache:${{ github.event.release.tag_name }} --push .
+
