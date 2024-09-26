@@ -31,4 +31,14 @@ services:
       - ${SERVER_CONFIG_PATH:-./config}:/app/config
     networks:
       - app_network
+
+  web:
+    depends_on:
+      - server
+    image: ghcr.io/onixbyte-business/score-sense/score-sense-server:${APP_VERSION:-latest}
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app_network
     
