@@ -35,7 +35,7 @@ services:
   web:
     depends_on:
       - server
-    image: ghcr.io/onixbyte-business/score-sense/score-sense-server:${APP_VERSION:-latest}
+    image: ghcr.io/onixbyte-business/score-sense/score-sense-web:${APP_VERSION:-latest}
     ports:
       - "80:80"
       - "443:443"
