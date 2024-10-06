@@ -1,14 +1,3 @@
-CREATE TABLE "admin" (
-  "id" int8 NOT NULL,
-  "username" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "password" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  CONSTRAINT "admin_pkey" PRIMARY KEY ("id")
-);
-ALTER TABLE "admin" OWNER TO "postgres";
-COMMENT ON COLUMN "admin"."id" IS '管理员 ID';
-COMMENT ON COLUMN "admin"."username" IS '管理员用户名';
-COMMENT ON COLUMN "admin"."password" IS '管理员密码';
-
 CREATE TABLE "answer" (
   "exam_id" int8 NOT NULL,
   "question_id" int8 NOT NULL,
@@ -47,6 +36,7 @@ CREATE TABLE "exam" (
   "description" text COLLATE "pg_catalog"."default",
   "province" char(2) NOT NULL,
   "prefecture" char(4) NOT NULL,
+  "status" int4 NOT NULL,
   CONSTRAINT "exam_pkey" PRIMARY KEY ("id")
 );
 ALTER TABLE "exam" OWNER TO "postgres";
@@ -56,6 +46,7 @@ COMMENT ON COLUMN "exam"."type" IS '考试类型';
 COMMENT ON COLUMN "exam"."description" IS '考试描述';
 COMMENT ON COLUMN "exam"."province" IS '举办省份';
 COMMENT ON COLUMN "exam"."prefecture" IS '举办城市';
+COMMENT ON COLUMN "exam"."status" IS '考试状态';
 COMMENT ON TABLE "exam" IS '考试信息';
 
 CREATE TABLE "exam_result" (
@@ -142,6 +133,14 @@ COMMENT ON COLUMN "question"."image_id" IS '图片 ID';
 COMMENT ON COLUMN "question"."max_score" IS '题目满分，将实际成绩 * 100 存储，如 100 存储为 10,000';
 COMMENT ON TABLE "question" IS '试题';
 
+CREATE TABLE "question_type" (
+  "id" int4 NOT NULL,
+  "label" varchar(255) NOT NULL,
+  PRIMARY KEY ("id")
+);
+COMMENT ON COLUMN "question_type"."id" IS '题型 ID';
+COMMENT ON COLUMN "question_type"."label" IS '题型描述';
+
 CREATE TABLE "sequence" (
   "key" varchar(255) NOT NULL,
   "next" int8 NOT NULL,
@@ -149,6 +148,16 @@ CREATE TABLE "sequence" (
 );
 COMMENT ON COLUMN "sequence"."key" IS '序号 Key';
 COMMENT ON COLUMN "sequence"."next" IS '下一可用序号';
+
+CREATE TABLE "solution" (
+  "exam_id" int8 NOT NULL,
+  "question_id" int8 NOT NULL,
+  "solution_text" text NOT NULL,
+  PRIMARY KEY ("exam_id", "question_id")
+);
+COMMENT ON COLUMN "solution"."exam_id" IS '考试 ID';
+COMMENT ON COLUMN "solution"."question_id" IS '题目 ID';
+COMMENT ON COLUMN "solution"."solution_text" IS '解析内容';
 
 CREATE TABLE "swipe" (
   "id" int8 NOT NULL,
@@ -165,11 +174,12 @@ COMMENT ON TABLE "swipe" IS '轮播图';
 
 CREATE TABLE "user" (
   "id" int8 NOT NULL,
-  "open_id" char(28) COLLATE "pg_catalog"."default" NOT NULL,
+  "open_id" char(28) COLLATE "pg_catalog"."default",
   "username" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "phone_number" char(11) COLLATE "pg_catalog"."default" NOT NULL,
+  "password" varchar(255),
+  "phone_number" char(11) COLLATE "pg_catalog"."default",
   "avatar_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "is_blocked" bool NOT NULL DEFAULT false,
+  "non_locked" bool NOT NULL DEFAULT false,
   CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
 ALTER TABLE "user" OWNER TO "postgres";
@@ -179,9 +189,10 @@ CREATE UNIQUE INDEX "user_open_id_uindex" ON "user" USING btree (
 COMMENT ON COLUMN "user"."id" IS '用户 ID';
 COMMENT ON COLUMN "user"."open_id" IS '用户微信 ID';
 COMMENT ON COLUMN "user"."username" IS '用户名';
+COMMENT ON COLUMN "user"."password" IS '密码';
 COMMENT ON COLUMN "user"."phone_number" IS '用户联系电话';
 COMMENT ON COLUMN "user"."avatar_id" IS '用户头像附件 ID';
-COMMENT ON COLUMN "user"."is_blocked" IS '用户是否被封禁';
+COMMENT ON COLUMN "user"."non_locked" IS '用户是否被封禁';
 
 CREATE TABLE "vacancy" (
   "id" int8 NOT NULL,
