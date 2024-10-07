@@ -1,17 +1,15 @@
 CREATE TABLE "answer" (
   "exam_id" int8 NOT NULL,
   "question_id" int8 NOT NULL,
-  "id" int8 NOT NULL,
   "user_id" int8 NOT NULL,
   "answer_text" text COLLATE "pg_catalog"."default" NOT NULL,
   "submitted_at" timestamp(6) NOT NULL DEFAULT now(),
   "score" int4 NOT NULL DEFAULT 0,
-  CONSTRAINT "answer_pkey" PRIMARY KEY ("exam_id", "question_id", "id")
+  CONSTRAINT "answer_pkey" PRIMARY KEY ("exam_id", "question_id", "user_id")
 );
 ALTER TABLE "answer" OWNER TO "postgres";
 COMMENT ON COLUMN "answer"."exam_id" IS '考试 ID';
 COMMENT ON COLUMN "answer"."question_id" IS '试题 ID';
-COMMENT ON COLUMN "answer"."id" IS '答案 ID';
 COMMENT ON COLUMN "answer"."user_id" IS '用户 ID';
 COMMENT ON COLUMN "answer"."answer_text" IS '答案';
 COMMENT ON COLUMN "answer"."submitted_at" IS '提交时间';
@@ -50,20 +48,18 @@ COMMENT ON COLUMN "exam"."status" IS '考试状态';
 COMMENT ON TABLE "exam" IS '考试信息';
 
 CREATE TABLE "exam_result" (
-  "id" int8 NOT NULL,
   "exam_id" int8 NOT NULL,
   "user_id" int8 NOT NULL,
   "vacancy_id" int8 NOT NULL,
-  "total_score" int4 NOT NULL DEFAULT 0,
-  "completed_at" timestamp(6) NOT NULL DEFAULT now(),
-  CONSTRAINT "exam_result_pkey" PRIMARY KEY ("id")
+  "score" int4 NOT NULL DEFAULT 0,
+  "completed_at" timestamp(6) NOT NULL,
+  CONSTRAINT "exam_result_pkey" PRIMARY KEY ("exam_id", "user_id")
 );
 ALTER TABLE "exam_result" OWNER TO "postgres";
-COMMENT ON COLUMN "exam_result"."id" IS '考试结果 ID';
 COMMENT ON COLUMN "exam_result"."exam_id" IS '考试 ID';
 COMMENT ON COLUMN "exam_result"."user_id" IS '参考用户 ID';
 COMMENT ON COLUMN "exam_result"."vacancy_id" IS '岗位 ID';
-COMMENT ON COLUMN "exam_result"."total_score" IS '总成绩';
+COMMENT ON COLUMN "exam_result"."score" IS '总成绩';
 COMMENT ON COLUMN "exam_result"."completed_at" IS '完成考试时间';
 
 CREATE TABLE "exam_type" (
