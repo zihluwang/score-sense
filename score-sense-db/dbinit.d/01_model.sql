@@ -34,6 +34,8 @@ CREATE TABLE "exam" (
   "description" text COLLATE "pg_catalog"."default",
   "province" char(2) NOT NULL,
   "prefecture" char(4) NOT NULL,
+  "base_num" int4 NOT NULL DEFAULT 0,
+  "released_at" timestamp NOT NULL,
   "status" int4 NOT NULL,
   CONSTRAINT "exam_pkey" PRIMARY KEY ("id")
 );
@@ -44,6 +46,8 @@ COMMENT ON COLUMN "exam"."type" IS '考试类型';
 COMMENT ON COLUMN "exam"."description" IS '考试描述';
 COMMENT ON COLUMN "exam"."province" IS '举办省份';
 COMMENT ON COLUMN "exam"."prefecture" IS '举办城市';
+COMMENT ON COLUMN "exam"."base_num" IS '考试参与人数的基数';
+COMMENT ON COLUMN "exam"."released_at" IS '考试发布时间';
 COMMENT ON COLUMN "exam"."status" IS '考试状态';
 COMMENT ON TABLE "exam" IS '考试信息';
 
