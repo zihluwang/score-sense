@@ -52,7 +52,7 @@ CREATE TABLE "exam_result" (
   "user_id" int8 NOT NULL,
   "vacancy_id" int8 NOT NULL,
   "score" int4 NOT NULL DEFAULT 0,
-  "completed_at" timestamp(6) NOT NULL,
+  "completed_at" timestamp(6),
   CONSTRAINT "exam_result_pkey" PRIMARY KEY ("exam_id", "user_id")
 );
 ALTER TABLE "exam_result" OWNER TO "postgres";

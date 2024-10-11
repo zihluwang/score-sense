@@ -373,3 +373,6 @@ INSERT INTO public.prefecture (code, name, province_code) VALUES ('6540', '伊�
 INSERT INTO public.prefecture (code, name, province_code) VALUES ('6542', '塔城地区', '65');
 INSERT INTO public.prefecture (code, name, province_code) VALUES ('6543', '阿勒泰地区', '65');
 INSERT INTO public.prefecture (code, name, province_code) VALUES ('6590', '自治区直辖县级行政区划', '65');
+
+INSERT INTO public."user" (id, open_id, username, password, phone_number, avatar_id, non_locked) VALUES (7239186754157150208, 'o0R8q7TemUD_yILnN9LMScggKSvo', '微信用户7239186754157150208', '$2a$10$UuT3gqqJKmV6F.vSK3BbFuDMmadD3gk6/350VitJd4elfj6eeCgU.', '           ', '0', true);
+INSERT INTO public."user" (id, open_id, username, password, phone_number, avatar_id, non_locked) VALUES (7239165565208625152, null, 'zhangsan', '$2a$10$KVldibu2xDafW0IwO3GDv.siqpdR1YJ0hvvnEXop0AThx6AdJd7Ri', '           ', '0', true);
