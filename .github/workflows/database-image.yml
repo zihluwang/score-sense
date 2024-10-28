@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Docker Image
         working-directory: score-sense-db
-        run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/onixbyte-business/score-sense/score-sense-db:${{ github.event.release.tag_name }} --push .
+        run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/zihluwang/score-sense-db:${{ github.event.release.tag_name }} --push .
 
   build-cache:
     name: Build Cache
@@ -52,5 +52,5 @@ jobs:
 
       - name: Build Docker Image
         working-directory: score-sense-cache
-        run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/onixbyte-business/score-sense/score-sense-cache:${{ github.event.release.tag_name }} --push .
+        run: docker buildx build --platform linux/amd64,linux/arm64 --tag ghcr.io/zihluwang/score-sense-cache:${{ github.event.release.tag_name }} --push .
 
