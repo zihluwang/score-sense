@@ -1,1 +1,4 @@
 .DS_Store
+/uploads
+config.ini
+/.idea
